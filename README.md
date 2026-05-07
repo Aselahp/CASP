@@ -1,4 +1,4 @@
-# CASP: Not Just Oversmoothing: Detecting Echo Chamber Effect in Graph Neural Networks
+# Not Just Oversmoothing: Detecting Echo Chamber Effect in Graph Neural Networks
 
 This repository contains the implementation of **Community-Aware Split Propagation (CASP)**, a lightweight model-agnostic plugin that decouples intra- and inter-community aggregation in Graph Neural Networks to address the echo chamber effect.
 
