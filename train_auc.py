@@ -38,7 +38,7 @@ parser.add_argument('--seed',           type=int,   default=42)
 parser.add_argument('--epochs',         type=int,   default=1000)
 parser.add_argument('--lr',             type=float, default=0.01)
 parser.add_argument('--weight_decay',   type=float, default=5e-4)
-parser.add_argument('--hidden',         type=int,   default=256)
+parser.add_argument('--hidden',         type=int,   default=64)
 parser.add_argument('--early_stopping', type=int,   default=200)
 parser.add_argument('--dropout',        type=float, default=0.1)
 parser.add_argument('--layers',         type=int,   default=2)
@@ -47,7 +47,8 @@ parser.add_argument('--dataset',        default='tolokers',
 parser.add_argument('--train_rate',     type=float, default=0.6)
 parser.add_argument('--val_rate',       type=float, default=0.2)
 parser.add_argument('--num_runs',       type=int,   default=10)
-parser.add_argument('--cons_weight',    type=float, default=1.0)
+parser.add_argument('--resolution', type=float, default=1.0,
+                    help="Louvain resolution parameter")
 args = parser.parse_args("")
 
 np.random.seed(args.seed)
@@ -146,7 +147,7 @@ t0 = time.time()
 # Use split 0 as reference for CASP preprocessing
 features_ref, labels_ref, edge_index_ref, tr_ref, _, _ = prepare_data_with_split(data_orig, 0)
 
-comm = louvain_partition(edge_index_ref, n)
+comm = lcomm = louvain_partition(edge_index_ref, n, resolution=args.resolution)
 Q    = louvain_modularity(edge_index_ref, n, comm)
 
 edge_intra_raw, edge_inter_raw = build_casp_edge_sets(edge_index_ref, comm)
